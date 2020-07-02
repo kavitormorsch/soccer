@@ -1,0 +1,138 @@
+<canvas id="meucanvas" width="1024" height="768" style="border: 3px solid;">
+</canvas>
+<script>
+  var canvas = document.getElementById("meucanvas");
+  var contexto = canvas.getContext("2d");
+  var bolax = 605;
+  var indoparacima = false;
+  var indoparabaixo = false;
+  var jogador1 = 343;
+
+ let TecladoPressionado = (e)=> {
+
+    console.log("pressionei uma tecla", e.keyCode)
+    if (e.keyCode == 87 ) {
+      console.log("to indo pra cima")
+      indoparacima = true;
+      indoparabaixo = false;
+    }
+
+    if (e.keyCode == 83) {
+      indoparabaixo = true;
+      indoparacima = false;
+    }
+  }
+
+  document.addEventListener("keydown", TecladoPressionado, true);
+  document.addEventListener("keyup", TecladoSolto, true);
+
+  function GameLoop() {
+
+    AtualizacaoLogica();
+
+    AtualizacaoGrafica();
+
+    requestAnimationFrame(GameLoop);
+
+  }
+
+  function TecladoSolto(e) {
+    if (e.keyCode == 87) {
+      indoparacima = false;
+    }
+
+    if (e.keyCode == 83) {
+      indoparabaixo = false;
+    }
+  }
+
+  function AtualizacaoLogica() {
+    bolax = bolax + 1;
+
+    if (indoparacima == true) {
+      jogador1 = jogador1 - 1;
+    }
+
+    if (indoparabaixo == true) {
+      jogador1 = jogador1 + 1;
+    }
+  }
+
+  function AtualizacaoGrafica() {
+    contexto.fillStyle = "GREEN";
+    contexto.fillRect(0, 0, 1024, 768);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(512, 76, 0, 598);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(35, 75, 950, 600);
+
+    contexto.fillStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(512, 384, 10, 0, Math.PI * 2, false)
+    contexto.fill();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(512, 384, 100, 0, Math.PI * 2, false)
+    contexto.stroke();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(985, 346, 25, 75);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(10, 346, 25, 75);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(35, 308, 65, 150);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(920, 308, 65, 150);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(785, 208, 200, 355);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.strokeRect(35, 208, 200, 355);
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(235, 384, 100, 0.5 * Math.PI, 1.5 * Math.PI, true);
+    contexto.stroke();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(785, 384, 100, 0.5 * Math.PI, 1.5 * Math.PI, false);
+    contexto.stroke();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(35, 675, 100, 1.5 * Math.PI, 0 * Math.PI, false);
+    contexto.stroke();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(35, 75, 100, 0.5 * Math.PI, 0 * Math.PI, true);
+    contexto.stroke();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(985, 75, 100, 0.5 * Math.PI, 1 * Math.PI, false);
+    contexto.stroke();
+
+    contexto.strokeStyle = "WHITE";
+    contexto.beginPath();
+    contexto.arc(985, 675, 100, 1 * Math.PI, 1.5 * Math.PI, false);
+    contexto.stroke();
+
+    contexto.fillStyle = "ORANGE";
+    contexto.beginPath();
+    contexto.arc(bolax, 350, 10, 0, Math.PI * 2);
+    contexto.fill();
+
+    contexto.fillStyle = "RED";
+    contexto.fillRect(45, jogador1, 20, 80);
+  }
+  GameLoop(); 
+</script>
